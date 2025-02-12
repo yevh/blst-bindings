@@ -151,15 +151,15 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        working-directory: src
+        working-directory: src/Nethermind.Crypto.Bls
         run: |
-          dotnet build Nethermind.Crypto.Bls.slnx -c ${{ env.BUILD_CONFIG }} --no-restore \
+          dotnet build -c ${{ env.BUILD_CONFIG }} --no-restore \
             ${{ inputs.preview && format('-p:VersionSuffix=preview.{0}', github.run_number) || '' }}
 
       - name: Test
         working-directory: src/Nethermind.Crypto.Test
         run: |
-          dotnet test -c ${{ env.BUILD_CONFIG }} --no-build
+          dotnet test -c ${{ env.BUILD_CONFIG }} --no-restore
 
       - name: Publish
         if: ${{ inputs.publish }}
